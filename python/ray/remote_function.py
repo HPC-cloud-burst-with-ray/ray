@@ -98,8 +98,7 @@ class RemoteFunction:
                 "async function with `asyncio.run(f())`. See more at:"
                 "https://docs.ray.io/en/latest/ray-core/actors/async_api.html "
             )
-        self._default_options = task_options
-
+       
         # When gpu is used, set the task non-recyclable by default.
         # https://github.com/ray-project/ray/issues/29624 for more context.
         num_gpus = self._default_options.get("num_gpus") or 0
@@ -115,7 +114,12 @@ class RemoteFunction:
         self._runtime_env = parse_runtime_env(self._runtime_env)
         if "runtime_env" in self._default_options:
             self._default_options["runtime_env"] = self._runtime_env
-
+        #change label
+        # self._label=self._default_options.get("label") or None
+        # if "label" in self._default_options:
+        #     self._default_options["label"] = self._label
+        # print("self._label",self._label)
+            
         self._language = language
         self._function = function
         self._function_signature = None
@@ -320,7 +324,11 @@ class RemoteFunction:
 
         # TODO(suquark): cleanup these fields
         name = task_options["name"]
+        
         runtime_env = parse_runtime_env(task_options["runtime_env"])
+
+        label=task_options["label"]
+      
         placement_group = task_options["placement_group"]
         placement_group_bundle_index = task_options["placement_group_bundle_index"]
         placement_group_capture_child_tasks = task_options[
@@ -349,7 +357,7 @@ class RemoteFunction:
             _warn_if_using_deprecated_placement_group(task_options, 4)
 
         resources = ray._private.utils.resources_from_ray_options(task_options)
-
+        
         if scheduling_strategy is None or isinstance(
             scheduling_strategy, PlacementGroupSchedulingStrategy
         ):
@@ -408,6 +416,7 @@ class RemoteFunction:
                 assert (
                     not self._is_cross_language
                 ), "Cross language remote function cannot be executed locally."
+            print("label")
             object_refs = worker.core_worker.submit_task(
                 self._language,
                 self._function_descriptor,
@@ -421,6 +430,9 @@ class RemoteFunction:
                 scheduling_strategy,
                 worker.debugger_breakpoint,
                 serialized_runtime_env_info or "{}",
+
+                #change
+                label if label not None else "",
             )
             # Reset worker's debug context from the last "remote" command
             # (which applies only to this .remote call).

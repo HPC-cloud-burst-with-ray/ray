@@ -635,10 +635,9 @@ cdef int prepare_resources(
         unordered_map[c_string, double] out
         c_string resource_name
         list unit_resources
-
     if resource_dict is None:
         raise ValueError("Must provide resource map.")
-
+   
     for key, value in resource_dict.items():
         if not (isinstance(value, int) or isinstance(value, float)):
             raise ValueError("Resource quantities may only be ints or floats.")
@@ -3502,6 +3501,7 @@ cdef class CoreWorker:
                     scheduling_strategy,
                     c_string debugger_breakpoint,
                     c_string serialized_runtime_env_info,
+                    c_string label
                     ):
         cdef:
             unordered_map[c_string, double] c_resources
@@ -3533,7 +3533,7 @@ cdef class CoreWorker:
                 "https://docs.ray.io/en/master/ray-core/objects/serialization.html#troubleshooting " # noqa
                 "for more information.")
             raise TypeError(msg) from e
-
+        
         with self.profile_event(b"submit_task"):
             prepare_resources(resources, &c_resources)
             ray_function = CRayFunction(
@@ -3541,7 +3541,7 @@ cdef class CoreWorker:
             prepare_args_and_increment_put_refs(
                 self, language, args, &args_vector, function_descriptor,
                 &incremented_put_arg_ids)
-
+            
             task_options = CTaskOptions(
                 name, num_returns, c_resources,
                 b"",

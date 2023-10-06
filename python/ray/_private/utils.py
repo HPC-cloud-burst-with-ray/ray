@@ -562,13 +562,18 @@ def resources_from_ray_options(options_dict: Dict[str, Any]) -> Dict[str, Any]:
             "The resources dictionary must not "
             "contain the key 'memory' or 'object_store_memory'"
         )
+    #change
+    label=options_dict.get("label")
+    # print(label)
 
     num_cpus = options_dict.get("num_cpus")
     num_gpus = options_dict.get("num_gpus")
     memory = options_dict.get("memory")
     object_store_memory = options_dict.get("object_store_memory")
     accelerator_type = options_dict.get("accelerator_type")
-
+    
+    # if label is not None:
+    #     resources["label"] = label
     if num_cpus is not None:
         resources["CPU"] = num_cpus
     if num_gpus is not None:
@@ -581,7 +586,7 @@ def resources_from_ray_options(options_dict: Dict[str, Any]) -> Dict[str, Any]:
         resources[
             f"{ray_constants.RESOURCE_CONSTRAINT_PREFIX}{accelerator_type}"
         ] = 0.001
-
+    
     return resources
 
 

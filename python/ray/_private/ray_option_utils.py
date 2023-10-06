@@ -200,6 +200,8 @@ def _validate_accelerators(options: Dict[str, Any]):
 
 
 _common_options = {
+    "label": Option((str, type(None))),
+
     "accelerator_type": Option((str, type(None))),
     "memory": _resource_option("memory"),
     "name": Option((str, type(None))),
@@ -237,6 +239,8 @@ def issubclass_safe(obj: Any, cls_: type) -> bool:
 
 
 _task_only_options = {
+   
+
     "max_calls": _counting_option("max_calls", False, default_value=0),
     # Normal tasks may be retried on failure this many times.
     # TODO(swang): Allow this to be set globally for an application.
@@ -275,6 +279,7 @@ _task_only_options = {
 }
 
 _actor_only_options = {
+    
     "concurrency_groups": Option((list, dict, type(None))),
     "lifetime": Option(
         (str, type(None)),
