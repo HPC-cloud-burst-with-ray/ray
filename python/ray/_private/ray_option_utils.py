@@ -200,6 +200,9 @@ def _validate_accelerators(options: Dict[str, Any]):
 
 
 _common_options = {
+    #change
+    "label": Option((str, type(None))),
+
     "accelerator_type": Option((str, type(None))),
     "memory": _resource_option("memory"),
     "name": Option((str, type(None))),

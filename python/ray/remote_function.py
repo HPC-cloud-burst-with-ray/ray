@@ -319,6 +319,9 @@ class RemoteFunction:
         task_options.pop("max_calls", None)
 
         # TODO(suquark): cleanup these fields
+        #change 
+        label=task_options["label"]
+        print(label)
         name = task_options["name"]
         runtime_env = parse_runtime_env(task_options["runtime_env"])
         placement_group = task_options["placement_group"]
@@ -403,7 +406,7 @@ class RemoteFunction:
                 list_args = ray._private.signature.flatten_args(
                     self._function_signature, args, kwargs
                 )
-
+         
             if worker.mode == ray._private.worker.LOCAL_MODE:
                 assert (
                     not self._is_cross_language
@@ -421,6 +424,7 @@ class RemoteFunction:
                 scheduling_strategy,
                 worker.debugger_breakpoint,
                 serialized_runtime_env_info or "{}",
+                label
             )
             # Reset worker's debug context from the last "remote" command
             # (which applies only to this .remote call).

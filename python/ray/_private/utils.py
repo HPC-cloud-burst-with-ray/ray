@@ -551,6 +551,7 @@ def resources_from_ray_options(options_dict: Dict[str, Any]) -> Dict[str, Any]:
     Returns:
         A dictionary of the resource requirements for the task.
     """
+    
     resources = (options_dict.get("resources") or {}).copy()
 
     if "CPU" in resources or "GPU" in resources:

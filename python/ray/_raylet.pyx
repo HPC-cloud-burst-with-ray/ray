@@ -3489,6 +3489,8 @@ cdef class CoreWorker:
                 f" | PlacementGroupSchedulingStrategy"
                 f" | NodeAffinitySchedulingStrategy]")
 
+
+
     def submit_task(self,
                     Language language,
                     FunctionDescriptor function_descriptor,
@@ -3502,6 +3504,8 @@ cdef class CoreWorker:
                     scheduling_strategy,
                     c_string debugger_breakpoint,
                     c_string serialized_runtime_env_info,
+                    c_string label
+                    
                     ):
         cdef:
             unordered_map[c_string, double] c_resources
@@ -3520,7 +3524,7 @@ cdef class CoreWorker:
 
         self.python_scheduling_strategy_to_c(
             scheduling_strategy, &c_scheduling_strategy)
-
+        
         try:
             serialized_retry_exception_allowlist = ray_pickle.dumps(
                 retry_exception_allowlist,
@@ -3545,7 +3549,7 @@ cdef class CoreWorker:
             task_options = CTaskOptions(
                 name, num_returns, c_resources,
                 b"",
-                serialized_runtime_env_info)
+                serialized_runtime_env_info,label)
 
             # We are in the async context. We have to obtain
             # the task id from this context var. get_current_task_id()
