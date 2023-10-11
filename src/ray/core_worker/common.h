@@ -66,8 +66,7 @@ struct TaskOptions {
               std::unordered_map<std::string, double> &resources,
               const std::string &concurrency_group_name = "",
               const std::string &serialized_runtime_env_info = "{}",
-              const std::string &label="",
-              )
+              const std::string &label="")
       : name(name),
         num_returns(num_returns),
         resources(resources),
@@ -87,7 +86,7 @@ struct TaskOptions {
   /// fields which not contained in Runtime Env, such as eager_install.
   /// Propagated to child actors and tasks.
   std::string serialized_runtime_env_info;
-  std::label;
+  std::string label;
 };
 
 /// Options for actor creation tasks.

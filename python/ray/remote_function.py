@@ -322,6 +322,7 @@ class RemoteFunction:
         #change 
         label=task_options["label"]
         print(label)
+        
         name = task_options["name"]
         runtime_env = parse_runtime_env(task_options["runtime_env"])
         placement_group = task_options["placement_group"]
@@ -424,7 +425,7 @@ class RemoteFunction:
                 scheduling_strategy,
                 worker.debugger_breakpoint,
                 serialized_runtime_env_info or "{}",
-                label
+                label if label is not None else ""
             )
             # Reset worker's debug context from the last "remote" command
             # (which applies only to this .remote call).
