@@ -571,6 +571,9 @@ message ResourcesData {
   bool is_draining = 16;
   // Why the node is not idle.
   repeated string node_activity = 17;
+
+  //add label here
+  map<string, string> labels = 18;
 }
 
 message ResourceUsageBatchData {

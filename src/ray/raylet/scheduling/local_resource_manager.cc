@@ -312,10 +312,14 @@ std::optional<syncer::RaySyncMessage> LocalResourceManager::CreateSyncMessage(
   resources_data.set_node_id(local_node_id_.Binary());
 
   NodeResources resources = ToNodeResources();
-
+ 
   auto total = resources.total.GetResourceMap();
   resources_data.mutable_resources_total()->insert(total.begin(), total.end());
+  
 
+  //add label 
+  resources_data.mutable_labels()->insert(resources.labels.begin(),
+                                          resources.labels.end());
   for (const auto &[resource_name, available] : resources.available.GetResourceMap()) {
     // Resource availability can be negative locally but treat it as 0
     // when we broadcast to others since other parts of the
