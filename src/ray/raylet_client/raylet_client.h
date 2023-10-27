@@ -173,6 +173,8 @@ class ResourceTrackingInterface {
   virtual ~ResourceTrackingInterface(){};
 };
 
+
+
 class RayletClientInterface : public PinObjectsInterface,
                               public WorkerLeaseInterface,
                               public DependencyWaiterInterface,
@@ -198,6 +200,11 @@ class RayletClientInterface : public PinObjectsInterface,
       const rpc::autoscaler::DrainNodeReason &reason,
       const std::string &reason_message,
       const rpc::ClientCallback<rpc::DrainRayletReply> &callback) = 0;
+
+  virtual void UpdateLabel(
+      bytes node_id,
+      std::unordered_map<std::string, std::string> labels,
+      const rpc::ClientCallback<rpc::UpdateLabelReply> &callback)=0;
 
   virtual std::shared_ptr<grpc::Channel> GetChannel() const = 0;
 };
@@ -483,6 +490,12 @@ class RayletClient : public RayletClientInterface {
 
   void GetResourceLoad(
       const rpc::ClientCallback<rpc::GetResourceLoadReply> &callback) override;
+// add UpdateLabel method here
+  void UpdateLabel(
+      const NodeID &node_id,
+      std::unordered_map<std::string, std::string> labels,
+
+      const rpc::ClientCallback<rpc::UpdateLabelReply> &callback) override;
 
   void NotifyGCSRestart(
       const rpc::ClientCallback<rpc::NotifyGCSRestartReply> &callback) override;

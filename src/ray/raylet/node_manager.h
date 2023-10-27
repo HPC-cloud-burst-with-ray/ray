@@ -550,6 +550,11 @@ class NodeManager : public rpc::NodeManagerServiceHandler,
                             rpc::ShutdownRayletReply *reply,
                             rpc::SendReplyCallback send_reply_callback) override;
 
+  /// Handle a 'UpdateLabel' request.
+  void HandleUpdateLabel(rpc::UpdateLabelRequest request,
+                         rpc::UpdateLabelReply *reply,
+                         rpc::SendReplyCallback send_reply_callback) override;
+
   /// Handle a `DrainRaylet` request.
   void HandleDrainRaylet(rpc::DrainRayletRequest request,
                          rpc::DrainRayletReply *reply,

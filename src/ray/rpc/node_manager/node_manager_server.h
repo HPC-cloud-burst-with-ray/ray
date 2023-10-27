@@ -50,7 +50,8 @@ namespace rpc {
   RAY_NODE_MANAGER_RPC_SERVICE_HANDLER(DrainRaylet)            \
   RAY_NODE_MANAGER_RPC_SERVICE_HANDLER(GetTasksInfo)           \
   RAY_NODE_MANAGER_RPC_SERVICE_HANDLER(GetObjectsInfo)         \
-  RAY_NODE_MANAGER_RPC_SERVICE_HANDLER(GetTaskFailureCause)
+  RAY_NODE_MANAGER_RPC_SERVICE_HANDLER(GetTaskFailureCause)    \
+  RAY_NODE_MANAGER_RPC_SERVICE_HANDLER(UpdateLabel)
 
 /// Interface of the `NodeManagerService`, see `src/ray/protobuf/node_manager.proto`.
 class NodeManagerServiceHandler {
@@ -93,6 +94,9 @@ class NodeManagerServiceHandler {
   virtual void HandleShutdownRaylet(ShutdownRayletRequest request,
                                     ShutdownRayletReply *reply,
                                     SendReplyCallback send_reply_callback) = 0;
+  virtual void HandleUpdateLabel(UpdateLabelRequest request,
+                                UpdateLabelReply *reply,
+                                SendReplyCallback send_reply_callback) = 0;
 
   virtual void HandleDrainRaylet(rpc::DrainRayletRequest request,
                                  rpc::DrainRayletReply *reply,

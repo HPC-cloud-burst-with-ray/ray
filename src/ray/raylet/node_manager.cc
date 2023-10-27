@@ -1989,6 +1989,21 @@ void NodeManager::HandleShutdownRaylet(rpc::ShutdownRayletRequest request,
   send_reply_callback(Status::OK(), shutdown_after_reply, shutdown_after_reply);
 }
 
+void NodeManager::HandleUpdateLabel(rpc::UpdateLabelRequest request,
+                                       rpc::UpdateLabelReply *reply,
+                                       rpc::SendReplyCallback send_reply_callback) {
+    // Set node labels when node added.
+  const NodeID node_id = NodeID::FromBinary(request.node_id());
+  absl::flat_hash_map<std::string, std::string> labels(request.labels().begin(),
+                                                       request.labels().end());
+  cluster_resource_scheduler_->GetClusterResourceManager().SetNodeLabels(
+  scheduling::NodeID(node_id.Binary()), labels);
+  send_reply_callback(Status::OK(), nullptr, nullptr);
+
+                                       
+}
+
+
 void NodeManager::HandleReleaseUnusedWorkers(rpc::ReleaseUnusedWorkersRequest request,
                                              rpc::ReleaseUnusedWorkersReply *reply,
                                              rpc::SendReplyCallback send_reply_callback) {
