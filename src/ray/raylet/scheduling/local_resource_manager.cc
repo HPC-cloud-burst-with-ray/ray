@@ -52,6 +52,10 @@ void LocalResourceManager::AddLocalResourceInstances(
   OnResourceOrStateChanged();
 }
 
+void LocalResourceManager::UpdateLabel(absl::flat_hash_map<std::string, std::string> new_labels){
+  local_resources_.labels=new_labels;
+}
+
 void LocalResourceManager::DeleteLocalResource(scheduling::ResourceID resource_id) {
   local_resources_.available.Remove(resource_id);
   local_resources_.total.Remove(resource_id);

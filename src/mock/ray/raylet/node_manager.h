@@ -147,6 +147,12 @@ class MockNodeManager : public NodeManager {
                rpc::GetTaskFailureCauseReply *reply,
                rpc::SendReplyCallback send_reply_callback),
               (override));
+  MOCK_METHOD(void,
+              UpdateLabel,
+              (rpc::UpdateLabelRequest request,
+               rpc::UpdateLabelReply *reply,
+               rpc::SendReplyCallback send_reply_callback),
+              (override));
 };
 
 }  // namespace raylet

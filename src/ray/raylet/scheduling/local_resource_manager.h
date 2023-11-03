@@ -66,6 +66,9 @@ class LocalResourceManager : public syncer::ReporterInterface {
   /// \param resource_total: New capacity of the resource.
   void AddLocalResourceInstances(scheduling::ResourceID resource_id,
                                  const std::vector<FixedPoint> &instances);
+  
+  /// Update node label
+  void UpdateLabel(absl::flat_hash_map<std::string, std::string> new_labels);
 
   /// Delete a given resource from the local node.
   ///

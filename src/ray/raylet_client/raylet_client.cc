@@ -504,12 +504,11 @@ void raylet::RayletClient::PinObjectIDs(
 }
 
 void raylet::RayletClient::UpdateLabel(
-    bytes node_id,
-    std::unordered_map<std::string, std::string> labels,
+    std::unordered_map<std::string, std::string> &labels,
     const rpc::ClientCallback<rpc::UpdateLabelReply> &callback) {
   rpc::UpdateLabelRequest request;
-  request.set_node_id(node_id);
-  request.set_label(label);
+  // request.set_node_id(node_id);
+  request.set_labels(labels);
   grpc_client_->UpdateLabel(request, callback);
 }
 
@@ -546,12 +545,6 @@ void raylet::RayletClient::UpdateResourceUsage(
   rpc::UpdateResourceUsageRequest request;
   request.set_serialized_resource_usage_batch(serialized_resource_usage_batch);
   grpc_client_->UpdateResourceUsage(request, callback);
-}
-
-void raylet::RayletClient::UpdateLabel(
-    
-    const rpc::ClientCallback<rpc::UpdateLabelReply> &callback) {
-  
 }
 
 void raylet::RayletClient::GetResourceLoad(
