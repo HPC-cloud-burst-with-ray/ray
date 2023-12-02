@@ -619,6 +619,7 @@ service InternalPubSubGcsService {
 
 message GetAllResourceUsageRequest {}
 
+
 message GetAllResourceUsageReply {
   GcsStatus status = 1;
   ResourceUsageBatchData resource_usage_data = 2;
@@ -628,6 +629,17 @@ message GetAllResourceUsageReply {
   bool cluster_full_of_actors_detected_by_gcs = 3;
 }
 
+message SetNewLabelsRequest{
+  bytes node_id = 1;
+  map<string,string> labels=2;
+
+}
+
+message SetNewLabelsReply{
+  GcsStatus status = 1;
+
+
+}
 message GetDrainingNodesRequest {}
 
 message GetDrainingNodesReply {
@@ -648,6 +660,8 @@ service NodeResourceInfoGcsService {
   rpc GetAllResourceUsage(GetAllResourceUsageRequest) returns (GetAllResourceUsageReply);
   // Get ids of draining nodes.
   rpc GetDrainingNodes(GetDrainingNodesRequest) returns (GetDrainingNodesReply);
+  // Set new labels
+  rpc SetNewLabels(SetNewLabelsRequest) returns (SetNewLabelsReply);
 }
 
 message GcsStatus {

@@ -97,7 +97,11 @@ class GcsResourceManager : public rpc::NodeResourceInfoHandler,
   void HandleGetAllResourceUsage(rpc::GetAllResourceUsageRequest request,
                                  rpc::GetAllResourceUsageReply *reply,
                                  rpc::SendReplyCallback send_reply_callback) override;
+  
 
+  void HandleSetNewLabels(rpc::GetAllResourceUsageRequest request,
+                                 rpc::GetAllResourceUsageReply *reply,
+                                 rpc::SendReplyCallback send_reply_callback)override;
   /// Handle a node registration.
   ///
   /// \param node The specified node to add.

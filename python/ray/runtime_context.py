@@ -436,6 +436,7 @@ class RuntimeContext(object):
         return ids_dict
 
     def set_label(self,labels:dict):
+        print(self.worker.current_node_id)
         node_id = self.worker.current_node_id.hex()
         print(node_id)
         self.worker.gcs_client.update_label(node_id,labels)

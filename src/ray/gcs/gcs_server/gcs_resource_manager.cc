@@ -181,6 +181,23 @@ void GcsResourceManager::HandleReportResourceUsage(
   ++counts_[CountType::REPORT_RESOURCE_USAGE_REQUEST];
 }
 
+void GcsResourceManager::HandleSetNewLabels（
+    rpc::SetNewLabelsRequest request,
+    rpc::SetNewLabelsReply *reply,
+    rpc::SendReplyCallback send_reply_callback）{
+
+    const auto node_id = NodeID::FromBinary(request.node_id());
+    scheduling::NodeID scheduling_node_id(node_id.Binary());
+    absl::flat_hash_map<std::string, std::string> labels(request.labels().begin(),
+                                                       request.labels().end());
+    cluster_resource_manager_.SetNodeLabels(scheduling_node_id, labels);
+
+    GCS_RPC_SEND_REPLY(send_reply_callback, reply, Status::OK());
+
+}
+
+
+
 // TODO(rickyx): We could update the cluster resource manager when we update the load
 // so that we will no longer need node_resource_usages_.
 std::unordered_map<google::protobuf::Map<std::string, double>, rpc::ResourceDemand>

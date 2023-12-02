@@ -236,12 +236,14 @@ Status PythonGcsClient::UpdateNodeLabels(const std::string &node_id,
   grpc::ClientContext context;
   PrepareContext(context, timeout_ms);
   
-  rpc::UpdateNodeLabelsRequest request;
+  rpc::SetNewLabelsRequest request;
   request.set_node_id(NodeID::FromHex(node_id).Binary());
   request.mutable_labels()->insert(
         labels.begin(), labels.end());
-  rpc::UpdateNodeLabelsReply reply;
-  grpc::Status status = node_info_stub_->UpdateNodeLabels(&context, request, &reply);
+  rpc::SetNewLabelsReply reply;
+  // grpc::Status status = node_info_stub_->UpdateNodeLabels(&context, request, &reply);
+  
+  grpc::Status status = node_resource_info_stub_->SetNewLabels(&context, request, &reply);
 
   if (status.ok()) {
     if (reply.status().code() == static_cast<int>(StatusCode::OK)) {
